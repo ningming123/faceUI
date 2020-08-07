@@ -1,5 +1,8 @@
 <template>
     <div class="app-container">
+      <el-button  class="filter-item light-warning-btn" type="warning" icon="el-icon-search" @click="handleFilter">
+        查询
+      </el-button>
       <div class="filter-container">
       <el-upload
         class="upload-demo"
@@ -51,6 +54,7 @@
   </div>
 </template>
 <script>
+  import {list} from '../../api/detect/detect.js'
   export default {
     data() {
       return {
@@ -72,7 +76,13 @@
       },
       beforeRemove(file, fileList) {
         return this.$confirm(`确定移除 ${ file.name }？`);
+      },
+      handleFilter(){
+        list('a').then(response => {
+         alert(1);
+      });
       }
+
     }
   }
 </script>
