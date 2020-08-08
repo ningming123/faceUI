@@ -1,23 +1,18 @@
 <template>
     <div class="app-container">
-      <el-button  class="filter-item light-warning-btn" type="warning" icon="el-icon-search" @click="handleFilter">
-        查询
-      </el-button>
       <div class="filter-container">
-      <el-upload
-        class="upload-demo"
-        action="https://jsonplaceholder.typicode.com/posts/"
-        :on-preview="handlePreview"
-        :on-remove="handleRemove"
-        :before-remove="beforeRemove"
-        multiple
-        :limit="1"
-        :on-exceed="handleExceed"
-        :file-list="fileList">
-        <el-button size="small" type="primary">上传图片</el-button>
-        <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过10M</div>
-      </el-upload>
-
+        <el-upload
+          class="avatar-uploader"
+          action="/api/face/upload"
+          :auto-upload="true"
+          name="uploadFile"
+          :show-file-list="true"
+          :on-success="handleAvatarSuccess"
+          :before-upload="beforeAvatarUpload"
+        >
+          <el-button size="small" type="primary">上传图片</el-button>
+          <div slot="tip" class="el-upload__tip">只能上传jpg/jpeg/png文件，且不超过10M</div>
+        </el-upload>
       </div>
       <div>
         <el-card class="box-card">
@@ -26,24 +21,35 @@
           </div>
           <div class="text item">
             <span>性   别：</span>
+            <span>{{facedetct.gender}}</span>
           </div>
           <div class="text item">
             <span>年   龄：</span>
+            <span>{{facedetct.age}}</span>
           </div>
           <div class="text item">
-            <span>脸   型：</span>
+            <span>脸  型：</span>
+            <span>{{facedetct.face_shape}}</span>
           </div>
           <div class="text item">
             <span>颜值打分：</span>
+            <span>{{facedetct.beauty}}</span>
+          </div>
+          <div class="text item">
+            <span>检测是否成功：</span>
+            <span>{{facedetct.error_msg}}</span>
           </div>
           <div class="text item">
             <span>检测时间：</span>
+            <span>{{facedetct.timestamp}}</span>
           </div>
         </el-card>
       </div>
       <div  class="block">
         <el-button size="small" type="success">结果反馈</el-button>
+        <el-button size="small" type="warning" @click="refreshPage">刷新页面</el-button>
       </div>
+
       <div class="block">
         <span class="demonstration">准确度</span>
         <el-rate
@@ -54,10 +60,20 @@
   </div>
 </template>
 <script>
-  import {list} from '../../api/detect/detect.js'
+  // import {list} from '../../api/detect/detect.js'
+  const faceDetectModel = () => ({
+    gender:null,
+    face_shape:null,
+    emotion:null,
+    beauty:null,
+    age:null,
+    error_msg:null,
+    timestamp:null
+  });
   export default {
     data() {
       return {
+        facedetct:faceDetectModel(),
         fileList: [],
         value1: null,
         value2: null,
@@ -65,29 +81,45 @@
       };
     },
     methods: {
-      handleRemove(file, fileList) {
-        console.log(file, fileList);
-      },
-      handlePreview(file) {
-        console.log(file);
-      },
-      handleExceed(files, fileList) {
-        this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
-      },
-      beforeRemove(file, fileList) {
-        return this.$confirm(`确定移除 ${ file.name }？`);
-      },
-      handleFilter(){
-        list('a').then(response => {
-         alert(1);
-      });
-      }
 
+      beforeAvatarUpload(file) {
+        var isImage=file.name.substring(file.name.lastIndexOf('.')+1)
+        const extension = isImage === 'jpg' || isImage === 'png' || isImage === 'jpeg';
+        const isLt2M = file.size / 1024 / 1024 < 10;
+        if (!extension) {
+          this.$message.error("上传文件只能是 jpg/jpeg/png 格式!");
+          return ;
+        }
+        if (!isLt2M) {
+          this.$message.error("上传图片大小不能超过 10MB!");
+          return ;
+        }
+        return extension && isLt2M;
+      },
+      //上传完成后自动执行
+      handleAvatarSuccess (res, file, fileList) {
+        this.$message({
+          message: res.msg
+        });
+        this.handleFilter(res);
+      },
+      handleFilter(res){
+          this.facedetct.gender = res.data.gender;
+          this.facedetct.face_shape = res.data.face_shape;
+          this.facedetct.age = res.data.age;
+          this.facedetct.timestamp = res.data.timestamp;
+          this.facedetct.beauty = res.data.beauty;
+          this.facedetct.emotion = res.data.emotion;
+          this.facedetct.error_msg = res.data.error_msg;
+      },
+      refreshPage(){
+        this.$router.go(0)
+      }
     }
   }
 </script>
 <style scoped>
-  .filter-container{background-color:#DCE5EA;padding:15px;}
+  .filter-container{background-color:#DCE5EA;padding:20px;}
   .text {
     font-size: 14px;
   }
@@ -106,6 +138,6 @@
   }
 
   .box-card {
-    width: 1000px;
+    width: 1200px;
   }
 </style>

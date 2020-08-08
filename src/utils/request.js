@@ -43,14 +43,14 @@ service.interceptors.response.use(
     if (response.status === 500) {
       return Promise.reject(new Error('服务异常，请稍后重试！'))
     }
-    const res = response.data
+    const res = response.data;
     // if the custom code is not 20000, it is judged as an error.
     if (res.returnCode !== '00200' & res.returnCode !== '00900') {
       Message({
         message: res.msg || 'Error',
         type: 'error',
         duration: 5 * 1000
-      })
+      });
 
       return Promise.reject(new Error(res.msg || 'Error'))
     } else {
@@ -69,7 +69,7 @@ service.interceptors.response.use(
         message: error.response.data.msg,
         type: 'error',
         duration: 5 * 1000
-      })
+      });
       const message = (error.response && error.response.data && error.response.data.msg) || '请求失败，请稍后重试'
       return Promise.reject(message)
     }
