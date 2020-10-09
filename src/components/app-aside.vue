@@ -13,17 +13,17 @@
 
 <script>
 import Menu from './menu'
+import {createMenu} from '../api/sys/sys.js'
 
 const menus = [
-  { label: '颜值打分', icon: 'fa fa-dashboard', path: '/faceDetect' },
-  { label: '人脸对比', icon: 'fa fa-dot-circle-o', path: '/faceContrast' }
+  // // { label: '颜值打分', icon: 'fa fa-dashboard', path: '/faceDetect' },
+  //  { label: '人脸对比', icon: 'fa fa-dot-circle-o', path: '/faceContrast' },
   // {
   //   label: 'GROUP 1',
   //   type: 'group',
   //   items: [
   //     { label: 'User Manger', icon: 'fa fa-user-md', path: '/page1' },
-  //     { label: 'Permission Manger', icon: 'fa fa-tasks', path: '/page2' },
-  //     { label: 'Group Manger', icon: 'fa fa-group', path: '/page3' }
+  //     { label: 'Permission Manger', icon: 'fa fa-tasks', path: '/page2' }
   //   ]
   // }
 
@@ -33,8 +33,20 @@ export default {
   components: { Menu },
   data () {
     return {
-      menus
+      menus:[]
     }
+  },
+  mounted(){
+    this.createMenu()
+  },
+  methods :{
+    createMenu(){
+      createMenu().then(response =>{
+        this.menus = response.data;
+      });
+    }
+
   }
+
 }
 </script>

@@ -51,13 +51,14 @@ service.interceptors.response.use(
         type: 'error',
         duration: 5 * 1000
       });
-
-      return Promise.reject(new Error(res.msg || 'Error'))
+      console.log(res);
+      return res
     } else {
       return res
     }
   },
   error => {
+
     if (error.response.status === 401 && error.response.data.returnCode !== '00603') {
       MessageBox.alert('登录信息失效，请重新登录', {}).then(() => {
         store.dispatch('user/resetToken').then(() => {
