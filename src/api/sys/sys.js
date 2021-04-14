@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
   export function createMenu() {
     return request({
-      url: '/api/createMenu',
-      method: 'post',
+      url: '/api/sys/module/createMenu',
+      method: 'get',
     })
 }

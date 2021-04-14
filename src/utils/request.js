@@ -45,17 +45,18 @@ service.interceptors.response.use(
     }
     const res = response.data;
     // if the custom code is not 20000, it is judged as an error.
-    if (res.returnCode !== '00200' & res.returnCode !== '00900') {
-      Message({
-        message: res.msg || 'Error',
-        type: 'error',
-        duration: 5 * 1000
-      });
-      console.log(res);
-      return res
-    } else {
-      return res
-    }
+    // if (res.returnCode !== '00200' & res.returnCode !== '00900') {
+    //   Message({
+    //     message: res.msg || 'Error',
+    //     type: 'error',
+    //     duration: 5 * 1000
+    //   });
+    //   console.log(res)
+    //   return res
+    // } else {
+    //   return res
+    // }
+    return res
   },
   error => {
 

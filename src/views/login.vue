@@ -23,7 +23,7 @@
       <div style="margin-top: 50px"></div>
       <p class="text-tips">
         <i class="fa fa-meetup" style="color: #29ABE2"></i>&nbsp;
-        <span class="footer-text">{{appName}} &nbsp;<el-tag size="mini">{{version}}</el-tag> <br>©make by <a href="https://www.github.com/mengdu" target="_blank" class="m-link-effect">{{author}}</a>
+        <span class="footer-text">{{appName}} &nbsp;<el-tag size="mini">{{version}}</el-tag> <br>©make by <a href="https://github.com/ningming123" target="_blank" class="m-link-effect">{{author}}</a>
     </span>
       </p>
     </div>
@@ -34,12 +34,12 @@ export default {
   name: 'login',
   data () {
     return {
-      username: 'Administrator',
+      username: 'admin',
       password: '123456',
       isLoging: false,
-      author: 'Lanyue',
+      author: 'Nm',
       version: 'v0.1.0',
-      appName: 'Admin Platform'
+      appName: 'Admin'
     }
   },
   methods: {
