@@ -11,6 +11,7 @@ import 'nprogress/nprogress.css'
 import 'vue-m-dialog/dist/css/default.css'
 import 'element-ui/lib/theme-chalk/index.css'
 import './assets/css/main.less'
+import echarts from 'echarts'
 
 Vue.use(Message, { name: 'msg' }) // mount `Vue.prototype.$msg`
 Vue.use(MDialog, {
@@ -19,7 +20,7 @@ Vue.use(MDialog, {
   confirmName: 'mconfirm'
 })
 Vue.use(ElementUI)
-
+Vue.prototype.$echarts = echarts
 Vue.config.productionTip = false
 
 router.beforeEach((to, form, next) => {

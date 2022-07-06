@@ -19,7 +19,6 @@ export const MContainer = Container
 export const MMain = Main
 export const MHeader = Header
 export const MFooter = Footer
-export const MSider = Sider;
-// export const HomePage = HomePage;
+export const MSider = Sider
 
 export default Container

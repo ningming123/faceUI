@@ -22,13 +22,20 @@
     </m-sider>
     <m-container>
       <m-header class="app-header"><AppHeader /></m-header>
-      <m-main class="app-content">
-        <transition appear name="m-page" mode="out-in">
-          <router-view />
+
+      <m-main class="app-content" >
+        <transition class="app-content" appear name="m-page" mode="out-in">
+         <router-view />
+          <app-center />
         </transition>
+
+
       </m-main>
-      <!-- <m-footer class="app-footer">footer</m-footer> -->
+       <!--<m-footer class="app-footer">footer</m-footer>-->
+
     </m-container>
+
+
   </m-container>
 
 </template>
@@ -37,6 +44,7 @@
 import { MContainer, MMain, MHeader, MSider } from './layout'
 import AppAside from './app-aside'
 import AppHeader from './app-header'
+import AppCenter from './app-center'
 
 export default {
   components: {
@@ -45,7 +53,8 @@ export default {
     MHeader,
     MSider,
     AppAside,
-    AppHeader
+    AppHeader,
+    AppCenter
   },
   data () {
     return {

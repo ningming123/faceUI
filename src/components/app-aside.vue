@@ -13,7 +13,7 @@
 </template>
 <script>
 import Menu from './menu'
-import {createMenu} from '../api/sys/sys.js'
+import {createMenu} from '@/api/sys/sys.js'
 // const menus = [
 //   //  { label: '颜值打分', icon: 'fa fa-dashboard', path: '/faceDetect' },
 //   //  { label: '人脸对比', icon: 'fa fa-dot-circle-o', path: '/faceContrast' },
